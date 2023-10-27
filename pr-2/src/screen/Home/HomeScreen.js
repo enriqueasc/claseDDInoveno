@@ -5,22 +5,27 @@ import Card from "../../components/Card/Card"
 
 
 
-const loadMore = ()=>{
-  console.log('cargando mas')
-}
 
 
 
 export default function HomeScreen(props) {
-  const { characters, nextUrl } = props
+  const { characters, loadMoreData, nextUrl } = props
   console.log("Homescreen props ", characters);
 
 
+
+const loadMore = ()=>{
+  
+  if(nextUrl){
+    loadMoreData();
+  }
+
+}
   
 
   return (
     <>
-      <SafeAreaView></SafeAreaView>
+      
       <FlatList
         data={characters}
         showsVerticalScrollIndicator={false}
@@ -28,7 +33,7 @@ export default function HomeScreen(props) {
         renderItem={({ item }) => <Card characters={item} />}
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
-        ListaFooterComponent ={
+        ListFooterComponent ={
           nextUrl && <ActivityIndicator style={styles.spiner} size="large" color="#79B543" />
         }
       />

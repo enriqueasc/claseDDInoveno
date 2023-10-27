@@ -29,5 +29,26 @@ export default function RickAndMortyApi() {
     fetchData()
   }, [])
 
-  return <HomeScreen characters={characters} nextUrl={nextUrl} />
+
+
+loadMoreData = async () => {
+  try {
+
+    if(nextUrl){
+      const response = await axios.get(nextUrl)
+      const newCharacters = response.data.results;
+
+      setCharacters([...characters, ...newCharacters]);
+
+      setNextUrl(response.data.info.next);
+
+    }
+
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+  return <HomeScreen characters={characters} loadMoreData={loadMoreData} nextUrl={nextUrl} />
 }
